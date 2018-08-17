@@ -1,0 +1,31 @@
+//DP法
+ public String longestPalindrome(String s) {
+        if(s.length()==0||s==null){
+            return "";
+        }
+        if(s.length()==1){
+            return s;
+        }
+        int longest=1;
+        int startindex=0;
+        int [][]dp=new int[s.length()][s.length()];
+        for(int i=0;i<s.length();i++){
+            dp[i][i]=1;
+            if((i<s.length()-1)&&(s.charAt(i)==s.charAt(i+1))){
+                dp[i][i+1]=1;
+                startindex=i;
+                longest=2;
+            }
+        }
+        for(int i=3;i<=s.length();i++){//子串长度
+            for(int j=0;j+i-1<s.length();j++){//起点的index值
+                int k=i+j-1;//终点的index值
+                if(s.charAt(j)==s.charAt(k)&&dp[j+1][k-1]==1){
+                    dp[j][k]=1;
+                    startindex=j;
+                    longest=i;
+                }
+            }
+        }
+        return s.substring(startindex,startindex+longest);
+    }
